@@ -9,7 +9,8 @@ export const usePasswordStore = defineStore("password", () => {
   const selectedPassword = ref<PasswordEntry | null>(null);
   const showModal = ref(false);
   const searchPassword = ref("");
-  const selectedTag = ref("");
+  const selectedTag = ref("All");
+  const isCopy = ref(false);
 
   const form = ref({
     title: "",
@@ -70,18 +71,8 @@ export const usePasswordStore = defineStore("password", () => {
     const editPasswordStore = useEditPasswordStore();
     editPasswordStore.isEditing = false;
   }
-  function selectTag(tag: string) {
-    if (selectedTag.value === tag) {
-      selectedTag.value = "";
-    } else {
-      selectedTag.value = tag;
-    }
-  }
   const searchAndFilter = computed(() => {
     let password = passwords.value;
-    if (selectedTag.value) {
-      return password.filter((item) => item.tags.includes(selectedTag.value));
-    }
     if (searchPassword.value) {
       const search = searchPassword.value.toLocaleLowerCase();
       return password.filter(
@@ -91,19 +82,13 @@ export const usePasswordStore = defineStore("password", () => {
           item.url?.toLocaleLowerCase().includes(search)
       );
     }
+    if (!selectedTag.value.includes("All")) {
+      return password.filter((item) => item.tags.includes(selectedTag.value));
+    }
+
     return password;
   });
-  //   if (!searchPassword.value) {
-  //     return passwords.value;
-  //   }
-  //   const search = searchPassword.value.toLocaleLowerCase();
-  //   return passwords.value.filter(
-  //     (item) =>
-  //       item.title.toLocaleLowerCase().includes(search) ||
-  //       item.login.toLocaleLowerCase().includes(search) ||
-  //       item.url?.toLocaleLowerCase().includes(search)
-  //   );
-  // });
+
   const groupedByTags = computed(() => {
     const groups: Record<string, PasswordEntry[]> = {};
     passwords.value.forEach((item) => {
@@ -125,7 +110,7 @@ export const usePasswordStore = defineStore("password", () => {
     selectedTag,
     groupedByTags,
     searchAndFilter,
-    selectTag,
+    isCopy,
     addPassword,
     resetForm,
     load,

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-start">
-    <label class="pl-5" v-if="label" :class="labelClass">{{ label }}</label>
+    <label v-if="label" :class="labelClass">{{ label }}</label>
     <input
       :value="modelValue"
       :type="type"

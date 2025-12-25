@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-5 pl-40">
+  <div class="pt-20 pl-25">
     <div class="flex">
       <h2 class="text-3xl mr-15">Добавить пароль</h2>
       <div class="buttons flex gap-5">

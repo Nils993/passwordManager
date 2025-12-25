@@ -1,17 +1,19 @@
 <template>
-  <div class="flex items-start flex-col mt-10 pl-10">
+  <div class="flex items-start flex-col m-20">
+    <CopyNotification />
     <div v-if="editPasswordStore.isEditing" class="flex flex-col items-start">
-      <div class="flex gap-40">
-        <h3 class="font-bold">
+      <div class="flex gap-30 items-center">
+        <h3 class="font-bold text-lg w-30">
           {{ PasswordStore.selectedPassword.title }}
         </h3>
-        <div class="flex gap-5">
+        <div class="flex gap-5 ml-20">
           <button @click="editPasswordStore.saveEdits()">Сохранить</button>
           <button @click="editPasswordStore.closeEditing()">Отменить</button>
           <button @click="modalStore.openModal()">Удалить</button>
         </div>
       </div>
-      <div>
+
+      <div class="flex flex-col items-start">
         <p>Адрес веб-сайта:</p>
         <a :href="PasswordStore.selectedPassword.url">{{
           PasswordStore.selectedPassword.url
@@ -34,8 +36,9 @@
           :type="editPasswordStore.showPassword ? 'text' : 'password'"
           placeholder="Введите пароль"
         />
-        <div class="flex gap-5">
+        <div class="ml-15 flex gap-5">
           <button
+            class="w-30"
             type="button"
             @click="
               editPasswordStore.showPassword = !editPasswordStore.showPassword
@@ -89,15 +92,15 @@
       </p>
     </div>
     <div v-if="!editPasswordStore.isEditing" class="flex flex-col items-start">
-      <div class="flex gap-40">
-        <h3 class="font-bold w-30">
+      <div class="flex gap-40 items-center">
+        <h3 class="font-bold text-lg w-30">
           {{ PasswordStore.selectedPassword.title }}
         </h3>
-        <div class="flex gap-5">
-          <button class="h-12" @click="editPasswordStore.startEditing()">
+        <div class="flex gap-5 ml-36">
+          <button @click="editPasswordStore.startEditing()">
             Редактировать
           </button>
-          <button class="h-12" @click="modalStore.openModal()">Удалить</button>
+          <button @click="modalStore.openModal()">Удалить</button>
         </div>
       </div>
       <div class="flex flex-col items-start w-40">
@@ -127,6 +130,7 @@
           />
           <div class="flex gap-5">
             <button
+              class="w-30"
               type="button"
               @click="
                 editPasswordStore.showPassword = !editPasswordStore.showPassword
@@ -182,6 +186,7 @@ import { usePasswordStore } from "../store/passwordStore";
 import FormField from "./FormField.vue";
 import { useModalRemoveStore } from "../store/modalRemoveStore";
 import { copyPassword } from "../utils/copyPassword";
+import CopyNotification from "./copyNotification.vue";
 const modalStore = useModalRemoveStore();
 const editPasswordStore = useEditPasswordStore();
 const PasswordStore = usePasswordStore();

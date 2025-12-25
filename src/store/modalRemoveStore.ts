@@ -21,10 +21,10 @@ export const useModalRemoveStore = defineStore("modalRemove", () => {
       (r) => r.id !== id
     );
     savePasswords(PasswordStore.passwords);
-    // PasswordStore.clearSelected();
     PasswordStore.updateSelectedPassword();
     closeModal();
     editPasswordStore.isEditing = false;
+    PasswordStore.selectedTag = "All";
   };
   return { isOpen, openModal, closeModal, remove };
 });
